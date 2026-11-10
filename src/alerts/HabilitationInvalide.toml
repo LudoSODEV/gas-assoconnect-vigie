@@ -30,3 +30,28 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+(() =>
+{
+	const now = Date.now();
+
+	return (row) =>
+	{
+		const network = row['Appartient-il à un grand réseau ayant une habilitation nationale ?'];
+
+		// Is a CCAS/CIAS
+		const isCCAS = (row['Statut'] === 'CCAS/CIAS');
+
+		// Regional accreditation is valid and in the future
+		const hasRegion = (+row['"Oui - Date de fin de l'habilitation"'] > now);
+
+		// Is part of a network that has a national accrediation
+		const isInNetwork = (network !== '') && (network !== '1- NON');
+
+		// 'Type de structure' contains '1_Partenaire'
+		// Not a 'CCAS/CIAS', no regional accreditation and no national network
+		return row['Type de structure'].includes('1_Partenaire')
+			&& !isCCAS && !hasRegion && !isInNetwork;
+	};
+}())
+'''

@@ -23,3 +23,14 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Catégorie du partenaire' is 'Catégorie 2'
+	// 'Appartient-il à un grand réseau ayant une habilitation nationale ?' does not start with (ANDES|Croix Rouge|Restos du Cœur|Secours Populaire|UGESS)
+	return row['Type de structure'].includes('1_Partenaire')
+		&& (row['Catégorie du partenaire'] === 'Catégorie 2')
+		&& !(row['Appartient-il à un grand réseau ayant une habilitation nationale ?'].match(/^(ANDES|Croix Rouge|Restos du Cœur|Secours Populaire|UGESS)/));
+})
+'''

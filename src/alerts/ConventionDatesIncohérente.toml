@@ -22,3 +22,12 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Date de la signature initiale de la convention / du contrat' is newer than 'Date de la dernière signature de la convention / du contrat'
+	return row['Type de structure'].includes('1_Partenaire')
+		&& (row['Date de la signature initiale de la convention / du contrat'] > row['Date de la dernière signature de la convention / du contrat']);
+})
+'''

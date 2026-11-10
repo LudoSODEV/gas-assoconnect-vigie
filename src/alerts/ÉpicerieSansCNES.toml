@@ -1,4 +1,4 @@
-type = "issue"
+type = "info"
 description = "Partenaires de type épicerie sociale qui ne reçoivent pas de produits CNES."
 message = "Épicerie sociale mais ne reçoit pas de produits CNES."
 formula = '''
@@ -22,4 +22,15 @@ formula = '''
 
   VSTACK(outputHeaders; outputRows)
 )
+'''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Modes de distribution de l'aide alimentaire' contains 'Epicerie Sociale'
+	// 'Le partenaire reçoit-il des produits CNES ?' does NOT start with 'Oui'
+	return row['Type de structure'].includes('1_Partenaire')
+		&& (row["Modes de distribution de l'aide alimentaire"].includes('Epicerie Sociale'))
+		&& !(row['Le partenaire reçoit-il des produits CNES ?'].startsWith('Oui'));
+})
 '''

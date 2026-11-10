@@ -1,6 +1,7 @@
 type = "issue"
 description = "Partenaires faisant partie d'un réseau de Catégorie 2 mais catégorisé incorrectement."
 message = "Fait partie du réseau {3} mais catégorisé en {4}."
+message2 = "Fait partie du réseau {Appartient-il à un grand réseau ayant une habilitation nationale ?} mais catégorisé en {Catégorie du partenaire}."
 formula = '''
 =LET(
   dbHeaders; ACStructures!$1:$1;
@@ -22,4 +23,15 @@ formula = '''
 
   VSTACK(outputHeaders; outputRows)
 )
+'''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Catégorie du partenaire' is NOT 'Catégorie 2'
+	// 'Appartient-il à un grand réseau ayant une habilitation nationale ?' starts with (ANDES|Croix Rouge|Restos du Cœur|Secours Populaire|UGESS)
+	return row['Type de structure'].includes('1_Partenaire')
+		&& (row['Catégorie du partenaire'] !== 'Catégorie 2')
+		&& row['Appartient-il à un grand réseau ayant une habilitation nationale ?'].match(/^(ANDES|Croix Rouge|Restos du Cœur|Secours Populaire|UGESS)/);
+})
 '''

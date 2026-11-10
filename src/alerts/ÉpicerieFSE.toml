@@ -23,3 +23,14 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Modes de distribution de l'aide alimentaire' contains 'Epicerie Sociale'
+	// 'Le partenaire reçoit-il des produits du FSE + ?' is 'Oui'
+	return row['Type de structure'].includes('1_Partenaire')
+		&& (row["Modes de distribution de l'aide alimentaire"].includes('Epicerie Sociale'))
+		&& (row['Le partenaire reçoit-il des produits du FSE + ?'] === 'Oui');
+})
+'''

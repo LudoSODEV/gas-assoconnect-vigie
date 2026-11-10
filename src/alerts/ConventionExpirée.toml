@@ -25,3 +25,20 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	const cutoffDate = new Date;
+	cutoffDate.setFullYear(cutoffDate.getFullYear() - 5);
+
+	return (row) =>
+	{
+		// 'Type de structure' contains '1_Partenaire'
+		// 'Appartient-il à un grand réseau ayant une habilitation nationale ?' is NOT 'Croix Rouge'
+		// 'Date de la dernière signature de la convention / du contrat' is older than 5 years ago
+		return row['Type de structure'].includes('1_Partenaire')
+			&& (row['Appartient-il à un grand réseau ayant une habilitation nationale ?'] !== 'Croix Rouge')
+			&& (row['Date de la signature initiale de la convention / du contrat'] < cutoffDate);
+	};
+}())
+'''

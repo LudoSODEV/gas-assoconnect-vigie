@@ -23,3 +23,14 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Produits de la BA souhaités par le partenaire' contains 'Surgelé'
+	// 'Equipements/Locaux' does NOT contain 'Chambre froide négative' or 'Congélateur'
+	return row['Type de structure'].includes('1_Partenaire')
+		&& (row['Produits de la BA souhaités par le partenaire'].includes('Surgelé'))
+		&& !(row['Equipements/Locaux'].match(/Chambre froide négative|Congélateur/));
+})
+'''

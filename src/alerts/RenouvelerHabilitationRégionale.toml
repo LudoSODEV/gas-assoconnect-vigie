@@ -29,3 +29,32 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+(() =>
+{
+	// Between now and ~6 months from now
+	const minDate = Date.now();
+	const maxDate = minDate + (6 * 30 * 24 * 60 * 60);
+
+	return (row) =>
+	{
+		const network = row['Appartient-il à un grand réseau ayant une habilitation nationale ?'];
+		const date = +row['"Oui - Date de fin de l'habilitation"'];
+
+		// Is a CCAS/CIAS
+		const isCCAS = (row['Statut'] === 'CCAS/CIAS');
+
+		// Is part of a network that has a national accrediation
+		const isInNetwork = (network !== '') && (network !== '1- NON');
+
+		// 'Type de structure' contains '1_Partenaire'
+		// 'Appartient-il à un grand réseau ayant une habilitation nationale ?' is NOT 'Croix Rouge'
+		// 'Date de la dernière signature de la convention / du contrat' is between than 4.5 and 5 years ago
+		return row['Type de structure'].includes('1_Partenaire')
+			&& (date >= +minDate)
+			&& (date <= +maxDate)
+			&& !isCCAS
+			&& !isInNetwork;
+	};
+}())
+'''

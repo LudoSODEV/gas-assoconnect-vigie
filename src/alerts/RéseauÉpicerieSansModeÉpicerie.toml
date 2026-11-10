@@ -27,3 +27,14 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'Modes de distribution de l'aide alimentaire' does NOT contain 'Epicerie Sociale'
+	// 'Appartient-il à un grand réseau ayant une habilitation nationale ?' starts with 'ANDES' or 'UGESS'
+	return row['Type de structure'].includes('1_Partenaire')
+		&& !(row["Modes de distribution de l'aide alimentaire"].includes('Epicerie Sociale'))
+		&& (row['Appartient-il à un grand réseau ayant une habilitation nationale ?'].match(/^ANDES|^UGESS/));
+})
+'''

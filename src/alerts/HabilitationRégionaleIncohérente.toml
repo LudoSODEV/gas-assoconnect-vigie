@@ -24,3 +24,12 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+(row) =>
+{
+	const hasRegion = (row['Si non, a-t-il une habilitation régionale ?'] === 'Oui');
+	const hasRegionDate = (row["Oui - Date de fin de l'habilitation"] > 0);
+
+	return row['Type de structure'].includes('1_Partenaire') && (hasRegion !== hasRegionDate);
+}
+'''
