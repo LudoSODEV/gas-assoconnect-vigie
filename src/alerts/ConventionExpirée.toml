@@ -26,7 +26,7 @@ formula = '''
 )
 '''
 js = '''
-((row) =>
+((() =>
 {
 	const cutoffDate = new Date;
 	cutoffDate.setFullYear(cutoffDate.getFullYear() - 5);
@@ -40,5 +40,5 @@ js = '''
 			&& (row['Appartient-il à un grand réseau ayant une habilitation nationale ?'] !== 'Croix Rouge')
 			&& (row['Date de la signature initiale de la convention / du contrat'] < cutoffDate);
 	};
-}())
+})())
 '''

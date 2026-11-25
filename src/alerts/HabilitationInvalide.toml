@@ -31,7 +31,7 @@ formula = '''
 )
 '''
 js = '''
-(() =>
+((() =>
 {
 	const now = Date.now();
 
@@ -43,7 +43,7 @@ js = '''
 		const isCCAS = (row['Statut'] === 'CCAS/CIAS');
 
 		// Regional accreditation is valid and in the future
-		const hasRegion = (+row['"Oui - Date de fin de l'habilitation"'] > now);
+		const hasRegion = (+row["Oui - Date de fin de l'habilitation"] > now);
 
 		// Is part of a network that has a national accrediation
 		const isInNetwork = (network !== '') && (network !== '1- NON');
@@ -53,5 +53,5 @@ js = '''
 		return row['Type de structure'].includes('1_Partenaire')
 			&& !isCCAS && !hasRegion && !isInNetwork;
 	};
-}())
+})())
 '''

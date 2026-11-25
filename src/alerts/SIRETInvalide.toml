@@ -46,7 +46,7 @@ js = '''
 	}
 
 	const siret = String(row['Siret']);
-	if (!(siret.match(/^[0-9]{14}$/))
+	if (!(siret.match(/^[0-9]{14}$/)))
 	{
 		return false;
 	}

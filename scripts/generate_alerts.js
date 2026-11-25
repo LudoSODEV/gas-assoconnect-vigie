@@ -5,6 +5,7 @@ const { generateMasterFormula } = require('../src/Setup');
 
 const alertsDir = path.join(__dirname, '..', 'src', 'alerts');
 const outputFile = path.join(__dirname, '..', 'src', 'Alerts.js');
+const exportFile = path.join(__dirname, '..', 'dist', 'export.js');
 
 const files = fs.readdirSync(alertsDir).filter(file => file.endsWith('.toml'));
 
@@ -18,8 +19,9 @@ const alerts = files.map(file =>
 });
 
 // Mock getAlerts for the Setup.js dependency
-function getAlerts() {
-    return alerts;
+function getAlerts()
+{
+	return alerts;
 }
 
 // Attach mock to global scope if needed, or re-factor Setup.js to accept alerts
@@ -40,3 +42,30 @@ function getMasterFormula()
 
 fs.writeFileSync(outputFile, outputContent);
 console.log(`Generated ${outputFile} with ${alerts.length} alerts and master formula.`);
+
+const exportDir = path.dirname(exportFile);
+if (!fs.existsSync(exportDir))
+{
+	fs.mkdirSync(exportDir, { recursive: true });
+}
+
+const exportEntries = alerts.map(alert =>
+{
+	return `\t${JSON.stringify(alert.name)}: ${alert.js}`;
+}).join(',\n');
+
+const exportAllEntries = alerts.map(alert =>
+{
+	return `\t{\n\t\tname: ${JSON.stringify(alert.name)},\n\t\tfn: ${alert.js}\n\t}`;
+}).join(',\n');
+
+const exportContent = `module.exports = {
+${exportEntries},
+\tall: [
+${exportAllEntries}
+\t]
+};
+`;
+
+fs.writeFileSync(exportFile, exportContent);
+console.log(`Generated ${exportFile} with ${alerts.length} exported alert functions.`);

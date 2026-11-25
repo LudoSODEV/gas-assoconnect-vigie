@@ -30,7 +30,7 @@ formula = '''
 )
 '''
 js = '''
-(() =>
+((() =>
 {
 	// Between now and ~6 months from now
 	const minDate = Date.now();
@@ -39,7 +39,7 @@ js = '''
 	return (row) =>
 	{
 		const network = row['Appartient-il à un grand réseau ayant une habilitation nationale ?'];
-		const date = +row['"Oui - Date de fin de l'habilitation"'];
+		const date = +row["Oui - Date de fin de l'habilitation"];
 
 		// Is a CCAS/CIAS
 		const isCCAS = (row['Statut'] === 'CCAS/CIAS');
@@ -56,5 +56,5 @@ js = '''
 			&& !isCCAS
 			&& !isInNetwork;
 	};
-}())
+})())
 '''

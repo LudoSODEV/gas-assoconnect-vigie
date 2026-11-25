@@ -28,7 +28,7 @@ formula = '''
 )
 '''
 js = '''
-(() =>
+((() =>
 {
 	// Between ~5 and ~4.5 years ago
 	const minDate = Date.now() - (5 * 365 * 24 * 60 * 60);
@@ -44,5 +44,5 @@ js = '''
 			&& (date >= minDate)
 			&& (date <= maxDate);
 	};
-}())
+})())
 '''

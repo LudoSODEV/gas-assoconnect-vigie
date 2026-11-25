@@ -29,7 +29,7 @@ formula = '''
 )
 '''
 js = '''
-(() =>
+((() =>
 {
 	const now = Date.now();
 
@@ -55,5 +55,5 @@ js = '''
 		return row['Type de structure'].includes('1_Partenaire')
 			&& !isCCAS && hasRegion && regionIsExpired &&  !isInNetwork;
 	};
-}())
+})())
 '''

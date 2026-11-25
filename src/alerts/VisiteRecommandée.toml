@@ -24,19 +24,17 @@ formula = '''
 )
 '''
 js = '''
-(() =>
+((() =>
 {
 	// 365 days ago
 	const cutoffDate = Date.now() - (365 * 24 * 60 * 60);
 
 	return (row) =>
 	{
-		const visitDate = ;
-
 		// 'Type de structure' contains '1_Partenaire'
 		// 'Date de la dernière visite' is older than the cutoff date
 		return row['Type de structure'].includes('1_Partenaire')
 			&& (+row['Date de la dernière visite'] <= cutoffDate);
 	};
-}())
+})())
 '''
