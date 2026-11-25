@@ -49,19 +49,13 @@ if (!fs.existsSync(exportDir))
 	fs.mkdirSync(exportDir, { recursive: true });
 }
 
-const exportEntries = alerts.map(alert =>
-{
-	return `\t${JSON.stringify(alert.name)}: ${alert.js}`;
-}).join(',\n');
-
 const exportAllEntries = alerts.map(alert =>
 {
-	return `\t{\n\t\tname: ${JSON.stringify(alert.name)},\n\t\tfn: ${alert.js}\n\t}`;
+	return `\t{\n\t\tname: ${JSON.stringify(alert.name)},\n\t\tfn: ${alert.js.trim()}\n\t}`;
 }).join(',\n');
 
 const exportContent = `module.exports = {
-${exportEntries},
-\tall: [
+\talertFunctions: [
 ${exportAllEntries}
 \t]
 };
