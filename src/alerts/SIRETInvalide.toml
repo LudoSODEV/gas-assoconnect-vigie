@@ -37,3 +37,37 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	if (!(row['Type de structure'].includes('1_Partenaire')))
+	{
+		return false;
+	}
+
+	const siret = String(row['Siret']);
+	if (!(siret.match(/^[0-9]{14}$/))
+	{
+		return false;
+	}
+
+	// Standard Luhn algorithm validation
+	let sum = 0;
+	for (let i = 0; i < 14; ++i)
+	{
+		let digit = parseInt(cleanedSiret.charAt(i), 10);
+		if (i % 2 === 0)
+		{
+			digit *= 2;
+			if (digit > 9)
+			{
+				digit -= 9;
+			}
+		}
+
+		sum += digit;
+	}
+
+	return (sum % 10 === 0);
+})
+'''

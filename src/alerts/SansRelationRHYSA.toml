@@ -26,3 +26,11 @@ formula = '''
   VSTACK(outputHeaders; outputRows)
 )
 '''
+js = '''
+((row) =>
+{
+	// 'Type de structure' contains '1_Partenaire'
+	// 'ID du Contact' has no associated 'RHYSA'
+	return row['Type de structure'].includes('1_Partenaire');
+})
+'''
